@@ -4,7 +4,7 @@ To start the virtual environment just clone the repo and run `pipenv shell`, thi
 
 If for some reason you need a `requirements.txt` file you can obtain it by running: `pipenv requirements > requirements.txt`
 
-You need to start the `Dockerfile` to initialize the database in postgres
+You need to build and run the DB from the `Dockerfile`
 
 # Goal
 Build a RESTful api that services requests for sprocket factory data and sprockets.
