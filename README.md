@@ -6,6 +6,14 @@ If for some reason you need a `requirements.txt` file you can obtain it by runni
 
 You need to build and run the DB from the `Dockerfile`
 
+# Preinsert DATA
+There are 2 `JSON` files with default information:
+```
+seed_factory_data.json
+seed_sprocket_types.json
+```
+To insert this information into the database you need to first have the container running and the inside the virtualenv execute `python insert_json.py` this will insert the data into the database
+
 # Goal
 Build a RESTful api that services requests for sprocket factory data and sprockets.
 

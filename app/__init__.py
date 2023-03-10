@@ -1,7 +1,7 @@
 from flask import Flask
 
 from .models import db
-from .models.production import SprocketProduction
+from .models.factory import Factory
 from .models.sprocket import Sprocket
 
 app = Flask(__name__)

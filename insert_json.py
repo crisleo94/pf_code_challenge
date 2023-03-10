@@ -1,37 +1,47 @@
 import json
 
-factories = []
+import psycopg2
+from psycopg2.extras import Json
 
-with open('seed_sprocket_types.json') as f:
-    factories = json.load(f).get('sprockets')
+conn = psycopg2.connect(
+    host='localhost',
+    port='5454',
+    database='sprockets',
+    user='postgres',
+    password='postgres'
+)
 
-with open('seed_factory_data.json') as f:
-    productivity = json.load(f).get('factories')
+cur = conn.cursor()
 
-for factory in factories:
-    for prod in productivity:
-      res = {
-          'teeth': factory.get('teeth'),
-          'pitch_diameter': factory.get('pitch_diameter'),
-          'outside_diameter': factory.get('outside_diameter'),
-          'pitch': factory.get('pitch'),
-          'actual': 0,
-          'goal': 0,
-          'time': 0
-      }
+def insert_factory_data():
+    with open('seed_factory_data.json') as f:
+        factories = json.load(f).get('factories')
 
-      time = prod.get('factory').get('chart_data').get('time')
-      actual_prod = prod.get('factory').get('chart_data').get('sprocket_production_actual')
-      expected_prod = prod.get('factory').get('chart_data').get('sprocket_production_goal')
+    for factory in factories:
+        chart_data = json.dumps(factory.get('factory').get('chart_data'))
+        print(chart_data)
+        cur.execute(
+            'INSERT INTO factory (chart_data) VALUES (%s)',
+            [chart_data]
+        )
 
-      for i in range(len(time)):
-          actual = actual_prod[i]
-          goal = expected_prod[i]
-          current_time = time[i]
+    conn.commit()
+    cur.close()
+    conn.close()
 
-          res['actual'] = actual
-          res['goal'] = goal
-          res['time'] = current_time
+def insert_sprockets():
+    with open('seed_sprocket_types.json') as f:
+        sprockets_data = json.load(f).get('sprockets')
 
-      print(res)
-        
+    for sp in sprockets_data:
+        cur.execute(
+            'INSERT INTO sprocket (teeth, pitch_diameter, outside_diameter, pitch) VALUES (%s, %s, %s, %s)',
+            (sp.get('teeth'),sp.get('pitch_diameter'),sp.get('outside_diameter'),sp.get('pitch'))
+        )
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+# insert_sprockets()
+insert_factory_data()
