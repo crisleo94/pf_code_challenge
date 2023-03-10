@@ -18,9 +18,9 @@ To insert this information into the database you need to first have the containe
 Build a RESTful api that services requests for sprocket factory data and sprockets.
 
 # TODO
-- [ ] An endpoint that returns all sprocket factory data
-- [ ] An endpoint that returns factory data for a given factory id
-- [ ] An endpoint that returns sprockets for a given id
-- [ ] An endpoint that will create new sprocket
-- [ ] An endpoint that will update sprocket for a given id
-- [ ] Add `.env` file
+- [x] An endpoint that returns all sprocket factory data
+- [x] An endpoint that returns factory data for a given factory id
+- [x] An endpoint that returns sprockets for a given id
+- [x] An endpoint that will create new sprocket
+- [x] An endpoint that will update sprocket for a given id
+- [x] Add `.env` file
